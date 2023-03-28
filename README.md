@@ -1,8 +1,10 @@
 # **Credit Card Customer Segmentation**
+
 ### **Creator Profile** 
 1. Gina Nur Rahmasari - ginanurahmasari@gmail.com | [LinkedIn](https://www.linkedin.com/in/gina-nur-rahmasari-4ab0a4b7/) | [GitHub](https://github.com/ginanurahmasari)
 2. Herdiansyah Prihatna Putra - herdiansyahprihatna@gmail.com | [LinkedIn](https://www.linkedin.com/in/herdiansyahp/) | [GitHub](https://github.com/HerdiansyahPP)
 3. Saniyya Hanan Rosyida - saniyya.rosyida@gmail.com | [LinkedIn](https://www.linkedin.com/in/saniyya-hanan-rosyida/) | [GitHub](https://github.com/saniyyarosyida)
+
 ### **Content**
 1. Business Problem Understanding
 2. Data Understanding
@@ -11,6 +13,7 @@
 5. Conclusion
 6. Recommendation
 7. Business Implementation
+
 ## **I. Business Problem Understanding**
 #### **Context**
 Dilansir dari [US Bank](https://www.usbank.com/credit-cards/how-credit-cards-work.html#:~:text=Credit%20cards%20offer%20you%20a,loan%20amount%20in%20the%20future.), kartu kredit merupakan instrumen yang dikeluarkan oleh pihak Bank atau lembaga keuangan sejenis yang memungkinkan pemilik kartu kredit untuk melakukan pembayaran non tunai, mentransfer saldo dan menarik uang tunai menggunakan uang milik bank yang tertera dalam sebuah kartu kredit. Tiap jenis kartu kredit memiliki limit saldo yang berbeda-beda. Kepemilikan jenis kartu kredit biasanya disesuaikan dengan penghasilan customer, riwayat penggunaan kartu kredit dan jumlah aset yang dimiliki. Semakin besar penghasilan dan kepemilikan aset, serta semakin loyal, konsumtif dan bertanggung jawab seorang customer dalam riwayat penggunaan kredit, akan memungkinkan bagi bank untuk memberikan limit kredit yang semakin besar atau bahkan tak terbatas. Setiap kegiatan transaksi yang dilakukan menggunakan kartu kredit wajib dibayarkan kembali kepada pihak bank di masa mendatang sesuai dengan tenggat waktu yang diberikan. Seorang customer dapat membayar tagihan kredit secara lunas atau dengan pembayaran minimum namun dikenakan bunga. Jika seorang customer terlambat/tidak membayar tagihannya, maka jumlah tagihannya akan dikenakan bunga dan denda oleh pihak bank dan jika hal ini terus terjadi akan beresiko untuk diturunkan limitnya atau di-blacklist. Dengan demikian, customer yang loyal, konsumtif, dan selalu membayar tagihan kreditnya menjadi kunci bagi pemberi kredit agar bisnis tetap berjalan lancar dan tidak terjadi kredit macet.
@@ -35,19 +38,10 @@ Jika pelanggan yang sudah ada tidak dipertahankan, pelanggan dapat beralih ke ka
 #### **Analytic Approach (Model & Metric Evaluation)**
 Selaku Data Scientist di American Gold Bank, kami akan menyelesaikan permasalahan ini dengan men-segmentasi pelanggan berdasarkan riwayat penggunaan kartu kreditnya. Dari sini, kita dapat melihat tingkat loyalitas, perilaku konsumtif dan tanggung jawab pelanggan saat membayar tagihan kredit. Oleh karena itu, model akan dibuat menggunakan metode clustering. Beberapa algoritma clustering yang akan digunakan adalah K-Means, Agglomerative dan DBSCAN (Density-based spatial clustering of applications with noise).
 
-Berikut cara kerja model dalam mensegmentasi pelanggan :
-- **K-Means** : Model akan menentukan titik centroid secara acak kemudian  mengelompokkan pelanggan berdasarkan seberapa dekat jarak antara data perilaku konsumsi kredit ke titik centroid dari sebuah cluster. Beberapa hal yang harus dipertimbangkan dalam menggunakan model ini adalah scaling, jumlah cluster optimal, metrik jarak dan metode yang digunakan (Elbow/Silhouette).
-  - **Metode Elbow** menentukan jumlah cluster optimal berdasarkan nilai within cluster sum of square (WCSS). Jumlah cluster optimal adalah ketika nilai WCSS sudah tidak berubah secara signifikan / tidak terdapat perubahan kemiripan data yang signifikan setelah penambahan 1 cluster. Semakin kecil nilai WCSS, maka semakin besar jumlah cluster optimal. 
-  - **Metode Silhouette** menentukan jumlah cluster bersadarkan seberapa mirip data poin dengan clusternya sendiri dibandingkan dengan cluster lain. Nilai silhouette score berkisar antara 0-1. Semakin besar nilai silhouette score, semakin jelas perbedaan antar tiap cluster. Jika nilai silhoutte adalah 0 hingga -1, maka terdapat ketidaksesuaian antara cluster dan data poin di dalamnya.
-- **Agglomerative** : Setiap data akan bergabung dengan data yang memiliki jarak terdekat kemudian membentuk sebuah cluster. Merging akan terus dilakukan hingga tercapainya kriteria tertentu, misalnya dalam kasus ini yaitu mendapatkan cluster dengan pelanggan yang tidak terlalu bervariasi, sehingga strategi marketing dapat lebih terarah. Hal yang harus dipertimbangkan adalah ukuran dataset tidak terlalu besar, scaling, jumlah cluster, metrik jarak, serta jenis linkage (Ward/Complete/Average). 
-  - **Metode ward** menggabungkan cluster berdasarkan total variance terkecil
-  - **Metode complete** menggabungkan cluster berdasarkan jarak terkecil antara 2 data terjauh antar cluster.
-  - **Metode average** menggabungkan cluster berdasarkan rata-rata jarak terkecil antara tiap data dalam 1 cluster terhadap tiap data dalam cluster lain
-- **DBSCAN** : Mengelompokkan data pelanggan yang posisinya berdekatan dengan mendefinisikan epsilon dan minimum sample. Kelebihan DBSCAN adalah dapat mendeteksi cluster yang berbentuk setengah lingkaran dan data yang tidak termasuk dalam cluster apapun (noise). Penentuan epsilon dan minimum sample harus dipertimbangkan karena semakin besar epsilon dan besar minimum sample dalam 1 cluster, maka semakin besar cluster dan semakin sedikit noise yang terdeteksi. Akibatnya, anggota cluster terlalu bervariasi. 
-
 Metric evaluasi yang akan digunakan adalah silhouette score untuk setiap model. Metric silhouette score mengevaluasi model berdasarkan tingkat kemiripan sebuah data poin dengan clusternya sendiri terhadap cluster lain. Jika nilai silhouette score semakin mendekati angka 1, maka semakin jelas perbedaan antar tiap cluster / dapat menjadi tolak ukur untuk melihat apakah pelanggan kartu kredit telah benar-benar tersegmentasi dengan jelas berdasarkan perilaku penggunaan kredit. Jika pelanggan tersegmentasi dengan baik, maka pemberian dan penerapan strategi bisnis untuk tiap segmen pelanggan menjadi lebih tepat sasaran, sehingga dapat meminimalisir waktu, tenaga dan pengeluaran biaya yang sia-sia. 
 
 Kami juga menggunakan membership untuk melihat jumlah anggota pada tiap cluster yang telah dibuat, sehingga penentuan model terbaik tak hanya berdasarkan nilai metric evaluasinya saja. Terkadang, ada model yang memiliki nilai evaluasi baik namun jumlah anggota pada tiap clusternya sangat jauh berbeda. Penggunaan membership dapat menghindari hal tersebut. Visualisasi boxplot dari hasil clustering juga akan menjadi pertimbangan untuk melihat perbedaan antara 1 cluster dengan cluster lain. Model dengan silhouette score terbaik dengan hasil cluster yang jelas terlihat perbedaannya dan proporsi cluster yang tidak mendiskriminasi cluster lain dapat dipertimbangkan sebagai model terbaik.
+
 ## **II. Data Understanding**
 Permasalahan di atas akan dianalisa menggunakan dataset **Credit Card for Clustering**. Dataset ini diupload oleh Arjun Bhasin di situs kaggle pada tahun 2018 dan berisi data riwayat perilaku pemegang kartu kredit aktif selama 6 bulan. Dataset dapat diakses [di sini.](https://www.kaggle.com/datasets/arjunbhasin2013/ccdata)
 **Dataset Information**
@@ -72,3 +66,9 @@ Permasalahan di atas akan dianalisa menggunakan dataset **Credit Card for Cluste
 | MINIMUM_PAYMENTS | Float | Total pembayaran minimum tagihan yang telah dilakukan customer (Dollar USA) |
 | PRCFULLPAYMENT | Float | Persentase pembayaran tagihan secara lunas yang telah dilakukan customer (Range 0-1, semakin besar nilai semakin tinggi persentasenya) |
 | TENURE | Integer | Tenor / jangka waktu layanan kartu kredit untuk pengguna (bulan) |
+
+## **III. Data Preprocessing**
+- Handle Missing Value in credit limit and minimum payments
+- Handle invalid data in credit limit
+- Scaling with robust scaler
+- Handle multicollinearity for K-Means with PCA and Feature Selection

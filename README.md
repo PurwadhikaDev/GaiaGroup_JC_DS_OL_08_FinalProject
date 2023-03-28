@@ -74,7 +74,7 @@ Permasalahan di atas akan dianalisa menggunakan dataset **Credit Card for Cluste
 
 - Handle invalid data in credit limit
 
-Drop CREDIT_LIMIT < 200
+- Drop CREDIT_LIMIT < 200
 
 - Handle outliers
 

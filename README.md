@@ -269,4 +269,4 @@ Note: Preview bisa berbeda bergantung masing-masing perangkat saat mengakses Tab
 
 ![image](Image/Pic6.png)
 
-![image](Image/Pic7.png)
+![image](Image/Pic 7.png)

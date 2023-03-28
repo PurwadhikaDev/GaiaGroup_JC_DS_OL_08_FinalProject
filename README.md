@@ -70,11 +70,9 @@ Permasalahan di atas akan dianalisa menggunakan dataset **Credit Card for Cluste
 
 - Handle Missing Value in credit limit and minimum payments
 
-- Drop CUST_ID
+- Drop column CUST_ID
 
-- Handle invalid data in credit limit
-
-- Drop CREDIT_LIMIT < 200
+- Handle invalid data in credit limit (Drop CREDIT_LIMIT < 200)
 
 - Handle outliers
 

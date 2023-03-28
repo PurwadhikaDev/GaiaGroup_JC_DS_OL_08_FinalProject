@@ -181,7 +181,7 @@ Tujuan strategi marketing untuk cluster ini adalah untuk membuat user semakin lo
   - Cashback (Medium nominal) jika melakukan transaksi purchases dan cash advance dengan nominal tertentu
   - Menawarkan Cash Advance program bagi pelanggan yang memang konsisten jumlah transaksi tarik tunainya besar dan selalu membayarkan tagihannya secara lunas (dengan pengamatan minimal 2-3 bulan). Program ini memberikan benefit admin fee yang lebih rendah.
 
-####**Rekomendasi untuk pengembangan model**
+#### **Rekomendasi untuk pengembangan model**
 - Menambahkan kolom-kolom baru yang berhubungan dengan perilaku pelanggan secara lebih mendetail, seperti jenis kartu kredit, tanggal terjadinya transaksi, nominal uang yang dikeluarkan untuk tiap transaksi, nama aset/produk/tempat yang dibeli menggunakan kredit, sehingga proses data cleaning dapat dilakukan secara lebih subjektif, silhouette score dapat ditingkatkan dan pemberian strategi bisnis dapat lebih terarah.
 - Mencoba algorithma mechine learning clustering lainnya, seperti Gaussian Mixture, BIRCH, dan Mini-Batch K-Means.
 - Mencoba metric evaluasi lain seperti Dunn’s Index (DI)

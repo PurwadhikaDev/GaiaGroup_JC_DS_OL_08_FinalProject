@@ -77,11 +77,26 @@ Permasalahan di atas akan dianalisa menggunakan dataset **Credit Card for Cluste
 | TENURE | Integer | Tenor / jangka waktu layanan kartu kredit untuk pengguna (bulan) |
 
 ## **III. Data Preprocessing**
+
 - Handle Missing Value in credit limit and minimum payments
+
+- Drop CUST_ID
+
 - Handle invalid data in credit limit
+
+Drop CREDIT_LIMIT < 200
+
 - Handle outliers
+
+Berikut merupakan visualisasi boxplot dari dataset setelah drop kolom CUST_ID
+![image](Image/Pic1.png) 
+
 - Scaling with robust scaler
+
 - Handle multicollinearity for K-Means with PCA and Feature Selection
+
+Berikut merupakan korelasi dari dataset setelah drop kolom CUST_ID
+![image](Image/Pic2.png) 
 
 ## **IV. Modeling and Evaluation**
 Algoritma yang digunakan:
@@ -105,10 +120,16 @@ Berikut pemodelan yang akan dilakukan :
 
 ## **Final Model : K-Means 3 cluster without feature selection and PCA**
 
+Silhouette Score : 0.436509
+Membership tiap cluster : {0: 7523, 1: 238, 2: 869}
+
+![image](Image/Pic3.png) 
+![image](Image/Pic4.png) 
+
 Hasil visualisasi dari model terbaik menunjukkan bahwa dari total 8.630 pelanggan kartu kredit dapat disegmentasikan menjadi 3 kelompok yaitu :
-- Cluster 0 : General User
-- Cluster 1 : High Purchase
-- Cluster 2 : High Cash Advance
+- Cluster 0 : General User (7523 user)
+- Cluster 1 : High Purchase (238 user)
+- Cluster 2 : High Cash Advance (869 user)
 
 #### **Karakteristik Cluster** 
 **1. General User :** 
@@ -196,3 +217,58 @@ Tujuan strategi marketing untuk cluster ini adalah untuk membuat user semakin lo
 - Mencoba metric evaluasi lain seperti Dunn’s Index (DI)
 - Menggunakan Mahalanobis distance untuk K-Means, berdasarkan penelitian yang dilakukan oleh [Rajan Sambandam](https://trcmarketresearch.com/whitepaper/cluster-analysis-gets-complicated/), multikolinearitas berpengaruh terhadap Eucledian distance namun tidak terhadap Mahalanobis distance. Ukuran dataset perlu dipertimbangkan sebab kekurangan menggunakan konsep jarak Mahalanobis adalah membutuhkan waktu komputasi yang lebih panjang. 
 
+## **VII. Business Implementation**
+
+**1. Improve/Gain Retention Rate**
+
+Rekomendasi yang dihasilkan tentunya bertujuan agar pengguna tetap menggunakan kartu kredit atau tidak churn. 
+- Berdasarkan [Statista](https://www.statista.com/statistics/1041645/customer-retention-rates-by-industry-worldwide/), retention rate pada banking industry sebesar 75% pada tahun 2018. 
+- Dilansir dari [Bain & Company](https://www.bain.com/client-results/right-value-for-the-right-customers/), studi kasus dilakukan terhadap sebuah bank bernama PiggyBank. Dengan meningkatkan customer relationship, retention rate meningkat 4% dan berdampak pada kenaikan profit sebesar 11%. 
+- Berdasarkan artikel [Harvard Business School](https://hbswk.hbs.edu/archive/the-economics-of-e-loyalty), kenaikan customer retention rate sebesar 5% dapat meningkatkan profit 25% sampai 95%.
+- Berdasarkan [Database Marketing Institute](http://www.dbmarketing.com/articles/Art175.htm) "It costs about 80 USD to acquire a new credit card customer who returns about 120 USD per year in profit, but only if she keeps the card. If she drops the card after a few weeks, or doesn’t use the card, the issuer will lose that 80 USD, plus some more money spent trying to reactivate her. It is a tough business.'' Sehingga bisa dikatakan profit dalam setahun yang didapatkan dari seorang user yang retain adalah sebesar 120 USD per tahun. Karena data yang kita miliki adalah 6 bulan sehingga kita mengasumsikan profitnya menjadi 60 USD.
+
+**Asumsi:**
+
+Final model diasumsikan berdampak pada peningkatan retention rate secara keseluruhan dan diasumsikan retention rate meningkat sebesar 4% - 5%. Kemudian kita dapat mengestimasi profit yang didapatkan dengan mengkalikan jumlah customer (8630), profit (60 USD), dan retention rate (75%).
+
+Estimasi profit awal yang dihasilkan oleh Bank selama 6 bulan adalah 399150.0 USD
+Estimasi profit yang dihasilkan oleh Bank selama 6 bulan setelah retention rate meningkat 4% adalah 420438.0 USD
+Estimasi profit yang dihasilkan oleh Bank selama 6 bulan setelah retention rate meningkat 5% adalah 425760.0 USD
+Dengan asumsi segmentasi/clustering dengan model dapat meningkatkan retention rate 4% - 5%, maka profit meningkat sebesar 5.33 % sampai 6.67 %
+
+**2. Reduce Marketing Cost**
+
+Persebaran Cluster:
+- General User: 7523
+- High Purchase: 238
+- High Cash Advance: 869
+
+**Asumsi:** 
+- Marketing cost dinotasikan dengan X 
+- Marketing cost pada cluster 0 adalah sebesar 1X karena nilai dari campaign seperti cashback dan reward bersifat low. 
+- Marketing cost pada cluster 1 dan 2 adalah sebesar 1,25X karena effort dari campaign lebih besar dibanding dengan cluster 0
+
+Jika kita tidak melakukan segmentasi atau clustering, kecenderungan yang akan dilakukan adalah menggunakan marketing cost 1,25X karena kita tidak tahu segmentasi mana yang perlu effort lebih sedikit. Sehingga kecenderungan secara konservatif akan memilih 1,25X. Sehingga marketing cost total sebesar:
+
+(7523 + 238 + 869) * 1,25X = 10787,5 X
+
+Sedangkan setelah kita melakukan segmentasi, kita mengetahui customer mana yang bisa ditreat lebih tepat dengan effort yang lebih rendah. Sehingga marketing cost menjadi:
+
+7523 * X + (238 + 869) * 1,25X = 8906,75 X
+
+Save = (107875,5 X - 8906,75 X) / 10787,5 X = 17,43 %
+
+Sehingga secara perhitungan kita dapat save marketing cost sekitar 17,43 %
+
+## **Tableau Dashboard**
+[Link Tableau Dashboard](https://public.tableau.com/app/profile/gina.nur.rahmasari/viz/FinalProjectJCDSOL-08/Dashboard1)
+
+Berikut merupakan tampilan Tableau Dashboard.
+
+Note: Preview bisa berbeda bergantung masing-masing perangkat saat mengakses Tableau (Not 100% fit)
+
+![image](Image/Pic5.png)
+
+![image](Image/Pic6.png)
+
+![image](Image/Pic7.png)

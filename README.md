@@ -52,6 +52,7 @@ Metric evaluasi yang akan digunakan adalah silhouette score untuk setiap model. 
 
 ## **II. Data Understanding**
 Permasalahan di atas akan dianalisa menggunakan dataset **Credit Card for Clustering**. Dataset ini diupload oleh Arjun Bhasin di situs kaggle pada tahun 2018 dan berisi data riwayat perilaku pemegang kartu kredit aktif selama 6 bulan. Dataset dapat diakses [di sini.](https://www.kaggle.com/datasets/arjunbhasin2013/ccdata)
+
 **Dataset Information**
 
 | Variabel Perilaku | Data Type | Description |
